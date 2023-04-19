@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .error {
+            font-family:monospace;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <title>Funds Transfer</title>
+</head>
+<body>
+    <h2>Funds Transfer</h2>
+    <form method="POST" data-th-action="@{/transfer}" data-th-object="${account}">
+    <table>
+        <tr>
+            <td>From account:</td>
+            <td>
+                <select name="account_id" id="account_id">
+                    <option value="" disabled selected>Select an account</option>
+                    <option th:each="o : ${options}" th:value="${o.account_id}" th:text="${o.name}
+                         + ' (' + ${o.account_id} + ')'"></option>
+                </select>
+                <div class="error" data-th-if="${#fields.hasErrors('fromAcctId')}">
+                    <span data-th-errors="*{fromAcctId}"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>To account:</td>
+            <td>
+                <select name="account_id" id="account_id">
+                    <option value="" disabled selected>Select an account</option>
+                    <option th:each="o : ${options}" th:value="${o.account_id}" th:text="${o.name}
+                         + ' (' + ${o.account_id} + ')'"></option>
+                </select>
+                <div class="error" data-th-if="${#fields.hasErrors('toAcctId')}">
+                    <span data-th-errors="*{toAcctId}"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Amount:</td>
+            <td>
+                <input type="number" min="0.01" step="0.01" data-th-field="*{amount}"/>
+                <div class="error" data-th-if="${#fields.hasErrors('amount')}">
+                    <span data-th-errors="*{amount}"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Comments:</td>
+            <td>
+                <textarea name="comments" id="comments" cols="20" rows="5" data-th-field="*{comments}"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="submit">Transfer</button>
+            </td>
+        </tr>
+        <tr data-th-if="${error}">
+            <td>Error:</td>
+            <td data-th-text="${error.message}"></td>
+        </tr>
+    </table>
+    </form>
+</body>
+</html>
