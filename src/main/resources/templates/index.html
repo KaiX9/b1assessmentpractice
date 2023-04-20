@@ -38,9 +38,6 @@
                     <option th:each="o : ${options}" th:value="${o.account_id}" th:text="${o.name}
                          + ' (' + ${o.account_id} + ')'"></option>
                 </select>
-                <div class="error" data-th-if="${#fields.hasErrors('toAcctId')}">
-                    <span data-th-errors="*{toAcctId}"></span>
-                </div>
             </td>
         </tr>
         <tr>
@@ -49,6 +46,9 @@
                 <input type="number" min="0.01" step="0.01" data-th-field="*{amount}"/>
                 <div class="error" data-th-if="${#fields.hasErrors('amount')}">
                     <span data-th-errors="*{amount}"></span>
+                </div>
+                <div class="error" data-th-if="${#fields.hasErrors('balance')}">
+                    <span data-th-errors="*{balance}"></span>
                 </div>
             </td>
         </tr>
@@ -64,11 +64,12 @@
                 <button type="submit">Transfer</button>
             </td>
         </tr>
-        <tr data-th-if="${error}">
-            <td>Error:</td>
-            <td data-th-text="${error.message}"></td>
-        </tr>
+        
     </table>
     </form>
+    <div data-th-unless="${null == error}">
+        <div>Error</div>
+        <code data-th-text="${error}"></code>
+    </div>
 </body>
 </html>

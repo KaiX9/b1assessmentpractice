@@ -43,10 +43,11 @@ public class FundsTransferController {
                 binding.addError(e);
             }
             return "index";
-    }
+        }
 
         Transact transact = new Transact();
 
+        try {
         boolean isTransferred = fundsTransferSvc.transferFunds(account);
         if (!isTransferred) {
             return "index";
@@ -58,6 +59,12 @@ public class FundsTransferController {
         transact.setReceiverName(FundsTransferService.receiverName);
 
         m.addAttribute("transact", transact);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+			m.addAttribute("error", ex.getMessage());
+            return "index";
+        }
+        
         return "transfer";
 }
 }
